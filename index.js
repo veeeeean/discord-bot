@@ -9,19 +9,27 @@ const client = new Client({
   partials: [Partials.Channel],
 });
 
-// 👇 replace these two with your actual IDs later
-const CHANNEL_ID = "1433361867773968454";
-const ROLE_ID = "1433351334978912276";
+const CHANNEL_ID = "1433361867773968454"; // Channel where it works
+const ROLE_ID = "1433351334978912276"; // Role to ping
+const PREFIX = "!help"; // The trigger command
 
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
   if (message.channel.id !== CHANNEL_ID) return;
 
-  if (message.mentions.roles.has(ROLE_ID)) {
-    const text = message.content.replace(`<@&${ROLE_ID}>`, "").trim();
-    await message.delete().catch(() => {});
-    await message.channel.send(`<@&${ROLE_ID}> ${text}`);
-  }
+  const content = message.content.trim();
+  if (!content.toLowerCase().startsWith(PREFIX)) return;
+
+  // Remove "!help" and keep the rest of the message
+  const userMessage = content.slice(PREFIX.length).trim();
+
+  await message.delete().catch(() => {});
+
+  // Format the message the bot will send
+  const reply = `<@&${ROLE_ID}> ${userMessage}\n\n*sent by <@${message.author.id}>*`;
+
+  await message.channel.send(reply);
+  console.log(`✅ Sent help ping for ${message.author.tag}`);
 });
 
 client.once("ready", () => {
