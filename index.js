@@ -4,18 +4,18 @@ const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent
+    GatewayIntentBits.MessageContent,
   ],
-  partials: [Partials.Channel]
+  partials: [Partials.Channel],
 });
 
-// 👇 replace these two with your real IDs later
+// 👇 replace these two with your actual IDs later
 const CHANNEL_ID = "YOUR_CHANNEL_ID";
 const ROLE_ID = "YOUR_ROLE_ID";
 
 client.on("messageCreate", async (message) => {
-  if (message.author.bot) return;           // ignore other bots
-  if (message.channel.id !== CHANNEL_ID) return;  // only this one channel
+  if (message.author.bot) return;
+  if (message.channel.id !== CHANNEL_ID) return;
 
   if (message.mentions.roles.has(ROLE_ID)) {
     const text = message.content.replace(`<@&${ROLE_ID}>`, "").trim();
