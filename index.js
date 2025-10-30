@@ -10,8 +10,8 @@ const client = new Client({
 });
 
 // 👇 replace these two with your actual IDs later
-const CHANNEL_ID = "YOUR_CHANNEL_ID";
-const ROLE_ID = "YOUR_ROLE_ID";
+const CHANNEL_ID = "1433361867773968454";
+const ROLE_ID = "1433351334978912276";
 
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
